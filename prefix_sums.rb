@@ -41,6 +41,36 @@ class PrefixSums
     p
   end
 
+  # Problem: You are given a non-empty, zero-indexed array A of n integers: a0,a1,...,an−1
+  # such that(0 <= ai <= 1000),and integers k and m such that 0 <= k, m < n </100000.
+  # A robot is at position k in array A and should perform m moves.
+  # One move moves a robot to an adjacent cell of the array. In every cell, the robot collects the value in the cell
+  # and replaces it with 0. The sum is the total of all collected values, and the goal is to calculate the maximum
+  # sum that the robot can collect in m moves.
+  #
+  # For example, consider array A such that:
+  #
+  #   [2, 3, 1, 5, 1, 3, 9] <= Array values
+  #   (0, 1, 2, 3, 4, 5, 6) <= Array indexes
+  #
+  # The robot starts at position k = 4 and should perform m = 4 moves.
+  # The robot might move to cells (3,4,5,6) and thereby collect the values 1 + 5 + 0 + 3 + 9 = 18.
+  # This is the maximal sum that the robot can collect.
+  #
+  # Solution: Note that the best option is to move in one direction optionally followed by some moves in the opposite direction.
+  # The robot should not change direction more than once. With this observation you can find the simplest solution.
+  # Make the first p = 0,1,2,...,m moves in one direction, then the next m − p moves in the opposite direction.
+  # This is just a simple simulation of the moves of the robot, and requires O(n * m) time.
+  #
+  # A better approach is to use prefix sums. If we make p moves in one direction, we can calculate
+  # the maximal opposite location of the robot. The robot collects all values between these extremes.
+  # We can calculate the total collected values in constant time by using prefix sums,
+  # and the total time complexity, at such a solution is O(n + m).
+  #
+  # @param a [Array<Integer>] of numbers.
+  def exercise(a)
+  end
+
 end
 
 test = PrefixSums.new
