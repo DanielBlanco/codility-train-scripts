@@ -135,7 +135,7 @@ class CountingElements
     puts 'frog_river_one'
     return -1 if a.empty? || x > a.size+1
     n = a.size                      # Get array a size
-    leafs = [-1] * n                # Create an array of size n filled with 0s (zeros).
+    leafs = [-1] * n                # Create an array of size n filled with -1s.
     for i in 0..(n-1)
       k = a[i]-1
       leafs[k]=i if leafs[k] < 0    # This will create an array of times using index as position: [0, 4, 1, 3, 6, -1, -1, -1]
@@ -212,12 +212,86 @@ class CountingElements
   #   expected worst-case time complexity is O(N+M);
   #   expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
   #
+  # Example crital clear explanation:
+  # 
+  # a => [3, 4, 4, 6, 1, 4, 4]
+  # n => 5 which represents (0, 0, 0, 0, 0)
+  #
+  # The iteration goes like this:
+  #
+  # 1st iteration:
+  # a[0] != N1 and a[0] != 5+1
+  # a[0] != N2 and a[0] != 5+1
+  # a[0] == N3 and a[0] != 5+1 then increase N3 by 1
+  # a[0] != N4 and a[0] != 5+1
+  # a[0] != N5 and a[0] != 5+1
+  # (0, 0, 1, 0, 0)
+  #
+  # 2nd iteration:
+  # a[1] != N1 and a[1] != 5+1
+  # a[1] != N2 and a[1] != 5+1
+  # a[1] != N3 and a[1] != 5+1
+  # a[1] == N4 and a[1] != 5+1 then increase N4 by 1
+  # a[1] != N5 and a[1] != 5+1
+  # (0, 0, 1, 1, 0)
+  #
+  # 3th iteration:
+  # a[2] != N1 and a[2] != 5+1
+  # a[2] != N2 and a[2] != 5+1
+  # a[2] != N3 and a[2] != 5+1
+  # a[2] == N4 and a[2] != 5+1 then increase N4 by 1
+  # a[2] != N5 and a[2] != 5+1
+  # (0, 0, 1, 2, 0)
+  #
+  # 4th iteration:
+  # a[3] != N1 and a[3] == 5+1 then set ALL to max counter
+  # (2, 2, 2, 2, 2)
+  #
+  # 5th iteration:
+  # a[4] == N1 and a[4] != 5+1 then increase N1 by 1
+  # (3, 2, 2, 2, 2)
+  #
+  # 6th iteration:
+  # a[5] != N1 and a[5] != 5+1
+  # a[5] != N2 and a[5] != 5+1
+  # a[5] != N3 and a[5] != 5+1
+  # a[5] == N4 and a[5] != 5+1 then increase N4 by 1
+  # a[5] != N5 and a[5] != 5+1
+  # (3, 2, 2, 3, 2)
+  #
+  # 7th iteration:
+  # a[6] != N1 and a[6] != 5+1
+  # a[6] != N2 and a[6] != 5+1
+  # a[6] != N3 and a[6] != 5+1
+  # a[6] == N4 and a[6] != 5+1 then increase N4 by 1
+  # a[6] != N5 and a[6] != 5+1
+  # (3, 2, 2, 4, 2)
+  #
   # @param n [Integer] number of counters.
   # @param a [Array[Integer]] array of operations.
   def max_counters(n, a)
     puts 'max_counters'
     # O(N+M) are 2 loops (not nested).
-
+    counters = [0] * n      # Create an array of size n filled with 0s (zeros).
+    max = 0
+    latest_max = 0
+    for i in 0..(a.size-1)
+      if a[i] == n+1
+        latest_max = max
+      else
+        j = a[i]-1
+        if counters[j] < latest_max
+          counters[j] = latest_max+1
+        else
+          counters[j]+=1
+        end
+        max = counters[j] if counters[j] > max
+      end
+    end
+    for i in 0..(counters.size-1)
+      counters[i] = latest_max if counters[i] < latest_max
+    end
+    counters
   end
 
 end
@@ -233,3 +307,4 @@ puts test.frog_river_one(1, [1]) # 0
 puts test.frog_river_one(2, [1]) # -1
 puts test.frog_river_one(3, [1,2,4,5,6,1,3]) # 6
 puts test.frog_river_one(3, [1,4,5,6,1,3,1,4,6,2,1,3]) # 9
+puts test.max_counters(5, [3,4,4,6,1,4,4]).to_s
