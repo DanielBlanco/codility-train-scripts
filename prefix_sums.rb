@@ -67,8 +67,24 @@ class PrefixSums
   # We can calculate the total collected values in constant time by using prefix sums,
   # and the total time complexity, at such a solution is O(n + m).
   #
-  # @param a [Array<Integer>] of numbers.
-  def exercise(a)
+  # @param a [Array<Integer>] of numbers (0 - 1000).
+  # @param a [Integer] robot start position.
+  # @param m [Integer] number of movements.
+  def exercise(a, k, m)
+    puts 'exercise'
+    n = a.size
+    p = [0] * (n+1)
+    for i in 1..n
+      p[i] = p[i-1] + a[i-1]
+    end
+    # TODO: Think about this one.
+    v1 = (k-m) >= 0 ? p[k-m] : 0 # ONLY movements to the left.
+    v2 = (m-k) >= 0 ? p[k-m] : 0 # ONLY movements to the left.
+    puts p.to_s
+    l = p[k+1]
+    puts l
+    r = p[] - p[k-1]
+    puts r
   end
 
 end
@@ -76,3 +92,4 @@ end
 test = PrefixSums.new
 puts test.prefix([0,1,2,3,4,5]).to_s
 puts test.suffix([0,1,2,3,4,5]).to_s
+puts test.exercise([2, 3, 1, 5, 1, 3, 9], 4, 4).to_s
