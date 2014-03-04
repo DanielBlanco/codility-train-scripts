@@ -42,7 +42,7 @@ class PrefixSums
   end
 
   # Problem: You are given a non-empty, zero-indexed array A of n integers: a0,a1,...,an−1
-  # such that(0 <= ai <= 1000),and integers k and m such that 0 <= k, m < n </100000.
+  # such that(0 <= ai <= 1000),and integers k and m such that 0 <= k, m < n <=100000.
   # A robot is at position k in array A and should perform m moves.
   # One move moves a robot to an adjacent cell of the array. In every cell, the robot collects the value in the cell
   # and replaces it with 0. The sum is the total of all collected values, and the goal is to calculate the maximum
@@ -74,17 +74,28 @@ class PrefixSums
     puts 'exercise'
     n = a.size
     p = [0] * (n+1)
-    for i in 1..n
-      p[i] = p[i-1] + a[i-1]
+    s = k-m < 0 ? 1 : k-m+1
+    e = k+m
+    for i in s..e
+      break if i > n
+      p[i] = i-1 < 0 ? a[0] : p[i-1] + a[i-1]
     end
-    # TODO: Think about this one.
-    v1 = (k-m) >= 0 ? p[k-m] : 0 # ONLY movements to the left.
-    v2 = (m-k) >= 0 ? p[k-m] : 0 # ONLY movements to the left.
+    # [0, 2, 5, 6, 11, 12, 15, 24]
+    # [9, 11, 14, 15, 20, 21, 24, 0]
+    # [2, 4, 7, 8, 13, 14, 17, 0]
     puts p.to_s
-    l = p[k+1]
-    puts l
-    r = p[] - p[k-1]
-    puts r
+    # [2, 3, 1, 5, 1, 3, 9]
+    max = 0
+    for i in 0..(m-1)
+      v = k+m-i < p.size ? p[k+m-i] : 0
+      next if v == 0
+      rest = k-i-1
+      puts v.to_s+"-"+p[rest].to_s
+      v-= p[rest] if rest > 0
+      puts "#{i}) "+v.to_s
+      max = v if v > max
+    end
+    max
   end
 
 end
@@ -93,3 +104,4 @@ test = PrefixSums.new
 puts test.prefix([0,1,2,3,4,5]).to_s
 puts test.suffix([0,1,2,3,4,5]).to_s
 puts test.exercise([2, 3, 1, 5, 1, 3, 9], 4, 4).to_s
+puts test.exercise([2, 3, 1, 5, 1, 3, 9], 2, 2).to_s
