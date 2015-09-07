@@ -1,7 +1,7 @@
 #!/usr/bin/env ruby
 # -*- encoding : utf-8 -*-
 class TimeComplexity
-  
+
   # time complexity O(n2).
   def algorithm1(n)
     puts 'O(n2)'
@@ -96,7 +96,7 @@ class TimeComplexity
     end
     min_diff
   end
-  
+
   # A small frog wants to get to the other side of the road. The frog is currently located at position X and wants to get 
   # to a position greater than or equal to Y. The small frog always jumps a fixed distance, D.
   # Count the minimal number of jumps that the small frog must perform to reach its target.
@@ -121,7 +121,7 @@ class TimeComplexity
   #   X ≤ Y.
   # Complexity:
   #   expected worst-case time complexity is O(1);
-  #   expected worst-case space complexity is O(1).  
+  #   expected worst-case space complexity is O(1).
   #
   # @param x [Integer] start position.
   # @param y [Integer] goal position.
@@ -131,7 +131,7 @@ class TimeComplexity
     puts "frog_jmp: "
     (y-x).fdiv(d).ceil
   end
-  
+
   # A zero-indexed array A consisting of N different integers is given. The array contains integers in the range [1..(N + 1)], 
   # which means that exactly one element is missing.
   # Your goal is to find that missing element.
@@ -168,7 +168,7 @@ class TimeComplexity
     end
     a[a.size-1]+1 # If did not found a missing value return last number + 1.
   end
-  
+
 end
 
 test = TimeComplexity.new

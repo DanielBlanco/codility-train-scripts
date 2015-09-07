@@ -213,7 +213,7 @@ class CountingElements
   #   expected worst-case space complexity is O(N), beyond input storage (not counting the storage required for input arguments).
   #
   # Example crital clear explanation:
-  # 
+  #
   # a => [3, 4, 4, 6, 1, 4, 4]
   # n => 5 which represents (0, 0, 0, 0, 0)
   #
